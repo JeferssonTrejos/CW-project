@@ -6,77 +6,120 @@
     <title>CW</title>
   </head>
   <body style="margin: 0">
+    <header style="background-color: #fffbeb">
+      <table>
+        <tr>
+          <!-- LOGO -->
+          <td width="100px">
+            <img
+              src="https://pedidosya.dhmedia.io/image/pedidosya/restaurants/panaderia-y-pasteleria-el-rosario-logo-unico.jpg"
+              alt=""
+              width="65px"
+              height="65px"
+            />
+          </td>
+          <!-- TITULO -->
+          <td width="1490px">
+            <h2 style="color: #92400e">Panadería El Rosario</h2>
+            <p style="color: #c05309">El mejor pan , recién horneado</p>
+          </td>
+
+          <!-- NAVBAR -->
+          <td width="330px">
+            <nav>
+              <span>
+                <a href="inicio.html">Inicio</a>
+              </span>
+              <span>
+                <a href="menu.html">Menu</a>
+              </span>
+
+              <span>
+                <a href="reservaciones.html">Reservaciones</a>
+              </span>
+              <span>
+                <a href="contacto.html">Contacto</a>
+              </span>
+              <span>
+                <a href="evento.html">Evento</a>
+              </span>
+            </nav>
+          </td>
+        </tr>
+      </table>
+    </header>
     <main>
+      <!-- Presentacion -->
       <section style="background-color: #fffbeb; color: white">
-        <h2 style="color: #92400e">
-          Bienvenidos a Restaurante Típico Intipucá
-        </h2>
+        <h2 style="color: #92400e">Bienvenidos a Panadería El Rosario</h2>
         <p style="color: #c05309">
-          Disfruta de la auténtica cocina salvadoreña en el corazón de Intipucá.
-          Nuestros platos típicos, preparados con ingredientes frescos y
-          locales, te transportarán a través de los sabores tradicionales de El
-          Salvador. Ven y vive una experiencia gastronómica única en un ambiente
-          acogedor y familiar.
+          Disfruta del mejor pan recién horneado en el corazón de Intipuca.
+          Nuestros productos, elaborados con ingredientes frescos y
+          tradicionales, te brindarán el auténtico sabor del pan hecho con amor.
+          Visítanos y vive una experiencia deliciosa en un ambiente acogedor y
+          familiar.
         </p>
       </section>
+      <!-- Galeria -->
       <article>
         <section style="color: white">
-          <h2 style="color: #92400e">Nuestra Cocina</h2>
+          <h2 style="color: #92400e">Nuestro Pan y Tradición</h2>
           <div>
             <span
               ><img
-                src="https://503local.com/wp-content/uploads/2022/10/pupusas-comida.jpg"
+                src="./images/img-1.jpg"
                 alt="Pupusas"
-                height="200px"
-                width="280px"
+                height="220px"
+                width="220px"
             /></span>
             <span
               ><img
-                src="https://guanacos.com/wp-content/uploads/2023/02/GUANACOS-PLATILLOS-TIPICOS-SALVADORENOS-YUCA-FRITA.jpg"
+                src="./images/img-2.jpg"
                 alt="Yuca frita"
-                height="200px"
-                width="280px"
+                height="220px"
+                width="220px"
             /></span>
             <span
               ><img
-                src="https://elviajerofeliz.com/wp-content/uploads/2019/10/Comida-t%C3%ADpica-de-El-Salvador-Elotes-Locos.jpg"
+                src="./images/img-3.jpg"
                 alt="Elotes locos"
-                height="200px"
-                width="280px"
+                height="220px"
+                width="220px"
             /></span>
             <span
               ><img
-                src="https://elviajerofeliz.com/wp-content/uploads/2019/10/Comida-t%C3%ADpica-de-El-Salvador-Enchiladas.jpg"
+                src="./images/img-4.jpg"
                 alt="Enchiladas"
-                height="200px"
-                width="280px"
+                height="220px"
+                width="220px"
             /></span>
           </div>
         </section>
       </article>
       <br />
+      <!-- Formulario -->
       <section style="background-color: #fffbeb; color: white">
-        <h2 style="color: #92400e">Haz tu Reservación</h2>
+        <h2 style="color: #92400e">Haz tu Pedido</h2>
         <form action="">
           <label style="color: #c05309" for="nombre">Nombre</label>
           <input type="text" id="nombre" name="nombre" />
           <br />
           <br />
-          <label style="color: #c05309" for="fecha">Fecha</label>
+          <label style="color: #c05309" for="fecha">Fecha de entrega</label>
           <input type="date" id="fecha" name="fecha" />
           <br />
           <br />
-          <label style="color: #c05309" for="hora">Hora</label>
+          <label style="color: #c05309" for="hora">Hora de entrega</label>
           <input type="time" id="hora" name="hora" />
           <br />
           <br />
-          <label style="color: #c05309" for="personas"
-            >Número de personas</label
+          <label style="color: #c05309" for="cantidad"
+            >Cantidad de productos</label
           >
-          <input type="number" id="personas" name="personas" />
+          <input type="number" id="cantidad" name="cantidad" />
           <br />
           <br />
-          <button type="submit">Reservar</button>
+          <button type="submit">Realizar pedido</button>
         </form>
       </section>
       <br />
@@ -84,19 +127,19 @@
     <footer>
       <table style="background-color: #92400e; color: white">
         <tr>
-          <td width="500px">
+          <td width="640px">
             <ul>
               <h3>Contacto</h3>
               <li>Calle Principal, Intipucá</li>
               <li>La Unión, El Salvador</li>
               <li>Teléfono: +503 2222-1111</li>
-              <li>Email: info@restauranteintipuca.com</li>
+              <li>Email: info@panaderiaelrosario.com</li>
               <br />
             </ul>
           </td>
-          <td width="500px">
+          <td width="640px">
             <ul>
-              <h3>Enlaces Rápidos</h3>
+              <h3>Navegacion</h3>
               <li><a href="">Inicio</a></li>
               <li><a href="">Menu</a></li>
               <li><a href="">Reservaciones</a></li>
@@ -104,9 +147,9 @@
               <li><a href="">Eventos</a></li>
             </ul>
           </td>
-          <td width="500px">
+          <td width="640px">
             <ul>
-              <h3>Síguenos</h3>
+              <h3>Siguenos en redes sociales</h3>
               <a href="">Facebook</a
               ><br />
               <a href="">Instagram</a
