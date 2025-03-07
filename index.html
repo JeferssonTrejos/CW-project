@@ -3,161 +3,284 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="./src/output.css" rel="stylesheet" />
+
     <title>CW</title>
   </head>
-  <body style="margin: 0" id="home">
-    <header style="background-color: #fffbeb">
-      <table>
-        <tr>
-          <!-- LOGO -->
-          <td width="100px">
-            <img
-              src="https://pedidosya.dhmedia.io/image/pedidosya/restaurants/panaderia-y-pasteleria-el-rosario-logo-unico.jpg"
-              alt=""
-              width="65px"
-              height="65px"
-            />
-          </td>
-          <!-- TITULO -->
-          <td width="1490px">
-            <h2 style="color: #92400e">Panadería El Rosario</h2>
-            <p style="color: #c05309">El mejor pan , recién horneado</p>
-          </td>
 
-          <!-- NAVBAR -->
-          <td width="330px">
-            <nav>
-              <span>
-                <a href="#home">Inicio</a>
-              </span>
-              <span>
-                <a href="#menu">Menu</a>
-              </span>
+  <body>
+    <header class="bg-amber-100 flex p-4 items-center justify-between">
+      <!-- LOGO Y TITULO -->
+      <div class="flex">
+        <img
+          class="w-14 h-14 mr-5"
+          src="https://pedidosya.dhmedia.io/image/pedidosya/restaurants/panaderia-y-pasteleria-el-rosario-logo-unico.jpg"
+          alt="logo"
+        />
 
-              <span>
-                <a href="#reservation">Reservar</a>
-              </span>
-              <span>
-                <a href="#contact">Contacto</a>
-              </span>
-            </nav>
-          </td>
-        </tr>
-      </table>
-    </header>
-    <main>
-      <!-- Presentacion -->
-      <section style="background-color: #fffbeb; color: white">
-        <h2 style="color: #92400e">Bienvenidos a Panadería El Rosario</h2>
-        <p style="color: #c05309">
-          Disfruta del mejor pan recién horneado en el corazón de Intipuca.
-          Nuestros productos, elaborados con ingredientes frescos y
-          tradicionales, te brindarán el auténtico sabor del pan hecho con amor.
-          Visítanos y vive una experiencia deliciosa en un ambiente acogedor y
-          familiar.
-        </p>
-      </section>
-      <!-- Galeria -->
-      <article>
-        <section style="color: white" id="menu">
-          <h2 style="color: #92400e">Nuestro Pan y Tradición</h2>
-          <div>
-            ><img
-              src="./images/img-1.jpg"
-              alt="Pupusas"
-              height="220px"
-              width="220px"
-            />
-
-            ><img
-              src="./images/img-2.jpg"
-              alt="Yuca frita"
-              height="220px"
-              width="220px"
-            />
-
-            ><img
-              src="./images/img-3.jpg"
-              alt="Elotes locos"
-              height="220px"
-              z
-              width="220px"
-            />
-
-            ><img
-              src="./images/img-4.jpg"
-              alt="Enchiladas"
-              height="220px"
-              width="220px"
-            />
-          </div>
-        </section>
-      </article>
-      <br />
-      <!-- Formulario -->
-      <section style="background-color: #fffbeb; color: white" id="reservation">
-        <h2 style="color: #92400e">Haz tu Pedido</h2>
-        <form action="">
-          <label style="color: #c05309" for="nombre">Nombre</label>
-          <input type="text" id="nombre" name="nombre" />
-          <br />
-          <br />
-          <label style="color: #c05309" for="fecha">Fecha de entrega</label>
-          <input type="date" id="fecha" name="fecha" />
-          <br />
-          <br />
-          <label style="color: #c05309" for="hora">Hora de entrega</label>
-          <input type="time" id="hora" name="hora" />
-          <br />
-          <br />
-          <label style="color: #c05309" for="cantidad"
-            >Cantidad de productos</label
+        <div>
+          <h1 class="text-amber-900 font-bold text-2xl">
+            Panadería El Rosario
+          </h1>
+          <span class="text-amber-600 italic font-medium"
+            >El mejor pan , recién horneado</span
           >
-          <input type="number" id="cantidad" name="cantidad" />
-          <br />
-          <br />
-          <button type="submit">Realizar pedido</button>
-        </form>
+        </div>
+      </div>
+
+      <!-- NAVBAR -->
+      <nav class="">
+        <ul class="flex space-x-10 mr-5 text-amber-800 font-medium">
+          <li>
+            <a
+              class="hover:text-amber-600 transition-all duration-100"
+              href="#home"
+              >Inicio</a
+            >
+          </li>
+          <li>
+            <a
+              class="hover:text-amber-600 transition-all duration-100"
+              href="#menu"
+              >Menu</a
+            >
+          </li>
+          <li>
+            <a
+              class="hover:text-amber-600 transition-all duration-100"
+              href="#reservation"
+              >Reservar</a
+            >
+          </li>
+          <li>
+            <a
+              class="hover:text-amber-600 transition-all duration-100"
+              href="#contact"
+              >Contacto</a
+            >
+          </li>
+          <li>
+            <a
+              class="hover:text-amber-600 transition-all duration-100"
+              href="#contact"
+              >Eventos</a
+            >
+          </li>
+        </ul>
+      </nav>
+    </header>
+    <main class=" flex p-10 space-x-8">
+      <!-- seccion principal -->
+      <section class="space-y-8 w-8/12">
+        <!-- Presentacion -->
+        <section class="bg-amber-50 p-5 rounded-xl ">
+          <h2 class="font-bold text-3xl mb-5 text-amber-800">
+            Bienvenidos a Panadería El Rosario
+          </h2>
+          <p class="text-amber-700">
+            Disfruta del mejor pan recién horneado en el corazón de Intipuca.
+            Nuestros productos, elaborados con ingredientes frescos y
+            tradicionales, te brindarán el auténtico sabor del pan hecho con
+            amor. Visítanos y vive una experiencia deliciosa en un ambiente
+            acogedor y familiar.
+          </p>
+        </section>
+        <!-- Galeria -->
+        <section class="bg-amber-50 p-7 rounded-xl" id="menu">
+          <article>
+            <h2 class="font-bold text-3xl my-5 text-amber-800">
+              Nuestro Pan y Tradición
+            </h2>
+            <div class="flex">
+              <div
+                class="rounded-xl overflow-hidden w-60 h-64 mr-5 border border-gray-200"
+              >
+                <img
+                  class="w-full h-full object-cover object-center"
+                  src="./images/img-1.jpg"
+                  alt="img"
+                />
+              </div>
+              <div
+                class="rounded-xl overflow-hidden w-60 h-64 mr-5 border border-gray-200"
+              >
+                <img
+                  class="w-full h-full object-cover object-center"
+                  src="./images/img-2.jpg"
+                  alt="img"
+                />
+              </div>
+              <div
+                class="rounded-xl overflow-hidden w-60 h-64 mr-5 border border-gray-200"
+              >
+                <img
+                  class="w-full h-full object-cover object-center"
+                  src="./images/img-3.jpg"
+                  alt="img"
+                />
+              </div>
+              <div
+                class="rounded-xl overflow-hidden w-60 h-64 mr-5 border border-gray-200"
+              >
+                <img
+                  class="w-full h-full object-cover object-center"
+                  src="./images/img-4.jpg"
+                  alt="img"
+                />
+              </div>
+            </div>
+          </article>
+        </section>
+
+        <!-- Formulario -->
+        <section class="bg-amber-50 p-7 rounded-xl w-2/4" id="reservation">
+          <h2 class="font-bold text-3xl mb-5 text-amber-800">Haz tu Pedido</h2>
+          <form action="" class="flex flex-col">
+            <label
+              class="mt-4 mb-2"
+              class="mt-4 mb-2"
+              style="color: #c05309"
+              for="nombre"
+              >Nombre</label
+            >
+            <input
+              class="bg-gray-50 p-1.5 border rounded-xl border-amber-200 focus:outline-none focus:border-amber-300 focus:ring-1 focus:ring-amber-300"
+              type="text"
+              id="nombre"
+              name="nombre"
+            />
+
+            <label class="mt-4 mb-2" style="color: #c05309" for="fecha"
+              >Fecha de entrega</label
+            >
+            <input
+              class="bg-gray-50 p-1.5 border rounded-xl border-amber-200 focus:outline-none focus:border-amber-300 focus:ring-1 focus:ring-amber-300"
+              type="date"
+              id="fecha"
+              name="fecha"
+            />
+
+            <label class="mt-4 mb-2" style="color: #c05309" for="hora"
+              >Hora de entrega</label
+            >
+            <input
+              class="bg-gray-50 p-1.5 border rounded-xl border-amber-200 focus:outline-none focus:border-amber-300 focus:ring-1 focus:ring-amber-300"
+              type="time"
+              id="hora"
+              name="hora"
+            />
+
+            <label class="mt-4 mb-2" style="color: #c05309" for="cantidad"
+              >Cantidad de productos</label
+            >
+            <input
+              class="bg-gray-50 p-1.5 border rounded-xl border-amber-200 focus:outline-none focus:border-amber-300 focus:ring-1 focus:ring-amber-300"
+              type="number"
+              id="cantidad"
+              name="cantidad"
+            />
+
+            <button
+              class="bg-amber-600 text-gray-100 hover:bg-amber-700 p-2 rounded-xl cursor-pointer mt-5 transition-all duration-100"
+              type="submit"
+            >
+              Realizar pedido
+            </button>
+          </form>
+        </section>
       </section>
-      <br />
+
+      <!-- Promociones y ofertas -->
+      <section class="bg-amber-50 p-7 rounded-xl w-4/12 self-start">
+        <!-- Promociones -->
+        <h2 class="font-bold text-xl mb-3 text-amber-800">
+          Proximas Promociones
+        </h2>
+        <ul class="text-amber-700 space-y-2">
+          <li>
+            <span class="font-semibold">20240-07-15</span>
+            <span class="font-normal ml-2">Descuento en pan dulce</span>
+          </li>
+          <li>
+            <span class="font-semibold">20240-07-15</span>
+            <span class="font-normal ml-2">Descuento en pan dulce</span>
+          </li>
+          <li>
+            <span class="font-semibold">20240-07-15</span>
+            <span class="font-normal ml-2">Descuento en pan dulce</span>
+          </li>
+        </ul>
+        <!-- Ofertas -->
+        <h2 class="font-bold text-xl my-3 text-amber-800">
+          Ofertas especiales
+        </h2>
+        <ul class="text-amber-700 space-y-2">
+          <li>
+            <span class="font-normal ml-2"
+              >2x1 en Panes Dulces (Lunes a Jueves)</span
+            >
+          </li>
+          <li>
+            <span class="font-normal ml-2"
+              >Café Gratis con la compra de pan artesanal (Viernes)</span
+            >
+          </li>
+          <li>
+            <span class="font-normal ml-2"
+              >10% de Descuento en Eventos Privados</span
+            >
+          </li>
+        </ul>
+      </section>
     </main>
-    <footer id="contact">
-      <table style="background-color: #92400e; color: white">
-        <tr>
-          <td width="640px">
-            <ul>
-              <h3>Contacto</h3>
-              <li>Calle Principal, Intipucá</li>
-              <li>La Unión, El Salvador</li>
-              <li>Teléfono: +503 2222-1111</li>
-              <li>Email: info@panaderiaelrosario.com</li>
-              <br />
-            </ul>
-          </td>
-          <td width="640px">
-            <ul>
-              <h3>Navegacion</h3>
-              <li><a href="#home">Inicio</a></li>
-              <li><a href="#menu">Menu</a></li>
-              <li><a href="#reservation">Reservar</a></li>
-              <li><a href="#contact">Contacto</a></li>
-            </ul>
-          </td>
-          <td width="640px">
-            <ul>
-              <h3>Siguenos en redes sociales</h3>
-              <a href="https://www.facebook.com/" target="_blank">Facebook</a
-              ><br />
-              <a href="https://www.instagram.com/" target="_blank">Instagram</a
-              ><br />
-              <a href="http://twitter.com/" target="_blank">Twitter</a
-              ><br />
-              <br />
-              <br />
-            </ul>
-          </td>
-        </tr>
-      </table>
+    <footer class="bg-amber-800 p-8 text-gray-100" id="contact">
+      <div class="flex justify-between">
+        <ul>
+          <h3 class="font-bold text-xl mb-3">Contacto</h3>
+          <li>Calle Principal, Intipucá</li>
+          <li>La Unión, El Salvador</li>
+          <li>Teléfono: +503 2222-1111</li>
+          <li>Email: info@panaderiaelrosario.com</li>
+        </ul>
+        <ul>
+          <h3 class="font-bold text-xl mb-3">Navegacion</h3>
+          <li class="hover:text-gray-300 transition-all duration-100">
+            <a href="#home">Inicio</a>
+          </li>
+          <li class="hover:text-gray-300 transition-all duration-100">
+            <a href="#menu">Menu</a>
+          </li>
+          <li class="hover:text-gray-300 transition-all duration-100">
+            <a href="#reservation">Reservar</a>
+          </li>
+        </ul>
+        <ul>
+          <h3 class="font-bold text-xl mb-3">Siguenos</h3>
+          <div class="space-x-2">
+            <a
+              class="hover:text-gray-300 transition-all duration-100"
+              href="https://www.facebook.com/"
+              target="_blank"
+              >Facebook</a
+            >
+            <a
+              class="hover:text-gray-300 transition-all duration-100"
+              href="https://www.instagram.com/"
+              target="_blank"
+              >Instagram</a
+            >
+            <a
+              class="hover:text-gray-300 transition-all duration-100"
+              href="http://twitter.com/"
+              target="_blank"
+              >Twitter</a
+            >
+          </div>
+        </ul>
+      </div>
+      <h1 class="text-center font-semibold">
+        © 2025 Todos los derechos reservados.
+      </h1>
     </footer>
   </body>
 </html>
