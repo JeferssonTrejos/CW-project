@@ -11,7 +11,8 @@ import NavBar from "./components/NavBar.vue";
     </div>
   </header>
 
-  <main class="container mx-auto flex items-center justify-between px-4 py-6">
+  <main class=" mx-auto flex items-center justify-between">
     <router-view />
   </main>
+  
 </template>
