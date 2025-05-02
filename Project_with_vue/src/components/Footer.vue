@@ -61,7 +61,7 @@ import {
             <li class="flex items-start">
               <MapPin class="mr-2 flex-shrink-0" />
               <span
-                >Calle Principal 123, Barrio El Centro, Ciudad Panadero</span
+                >Calle Principal 123, San Miguel, El Salvador</span
               >
             </li>
             <li class="flex items-center">
@@ -84,15 +84,15 @@ import {
           <ul class="space-y-2">
             <li class="flex justify-between">
               <span>Lunes - Viernes:</span>
-              <span>6:00 - 20:00</span>
+              <span>6:00 AM - 9:00 PM</span>
             </li>
             <li class="flex justify-between">
               <span>Sábado:</span>
-              <span>7:00 - 19:00</span>
+              <span>7:00 AM - 2:00 PM</span>
             </li>
             <li class="flex justify-between">
               <span>Domingo:</span>
-              <span>8:00 - 14:00</span>
+              <span>8:00 AM - 12:00PM</span>
             </li>
           </ul>
         </div>
