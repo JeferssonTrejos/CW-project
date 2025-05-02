@@ -1,5 +1,6 @@
 <script setup>
 import Branding from "./components/Branding.vue";
+import Footer from "./components/Footer.vue";
 import NavBar from "./components/NavBar.vue";
 </script>
 
@@ -11,8 +12,13 @@ import NavBar from "./components/NavBar.vue";
     </div>
   </header>
 
-  <main class=" mx-auto flex items-center justify-between">
+  <main class="min-h-[700px]">
     <router-view />
   </main>
-  
+
+  <Footer></Footer>
 </template>
+
+<style>
+@import "tailwindcss";
+</style>
