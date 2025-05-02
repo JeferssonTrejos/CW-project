@@ -57,12 +57,12 @@
     <!-- Llamado a la acción -->
     <section class="text-center">
       <p class="text-amber-700 mb-4">¿Listo para probar nuestros deliciosos productos?</p>
-      <RouterLink 
-        to="/pedidos" 
+      <router-link 
+        to="/order" 
         class="inline-block bg-amber-600 text-white px-6 py-3 rounded-lg hover:bg-amber-700 transition-colors"
       >
         Hacer un Pedido
-      </RouterLink>
+      </router-link>
     </section>
   </main>
   </div>
