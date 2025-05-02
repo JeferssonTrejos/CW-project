@@ -20,18 +20,18 @@ const upcomingEvents = [
 </script>
 
 <template>
-  <section className="py-16 bg-amber-50">
-    <div className="container mx-auto px-4">
-      <h2 className="font-bold text-3xl text-amber-900 mb-8">Próximos Eventos</h2>
+  <section class="py-16 bg-amber-50">
+    <div class="container mx-auto px-4">
+      <h2 class="font-bold text-3xl text-amber-900 mb-8">Próximos Eventos</h2>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
         <div
           v-for="event in upcomingEvents"
           :key="event.id"
-          className="bg-white rounded-lg overflow-hidden shadow-md flex flex-col md:flex-row"
+          class="bg-white rounded-lg overflow-hidden shadow-md flex flex-col md:flex-row"
         >
           <div
-            className="
+            class="
             relative 
             w-full h-48 
             md:w-2/5 md:h-auto"
@@ -39,18 +39,18 @@ const upcomingEvents = [
             <img
               :src="event.image"
               :alt="event.name"
-              className="object-cover w-full h-full"
+              class="object-cover w-full h-full"
             />
           </div>
-          <div className="p-6 md:w-3/5">
-            <h3 className="text-xl font-semibold text-amber-800 mb-1">
+          <div class="p-6 md:w-3/5">
+            <h3 class="text-xl font-semibold text-amber-800 mb-1">
               {{ event.title }}
             </h3>
-            <p className="text-amber-600 mb-3">{{ event.date }}</p>
-            <p className="text-amber-700 mb-4">{{ event.description }}</p>
+            <p class="text-amber-600 mb-3">{{ event.date }}</p>
+            <p class="text-amber-700 mb-4">{{ event.description }}</p>
             <router-link
               to="/contact"
-              className="text-amber-600 font-medium hover:text-amber-800 transition-colors"
+              class="text-amber-600 font-medium hover:text-amber-800 transition-colors"
             >
               Más información →
             </router-link>

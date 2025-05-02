@@ -5,7 +5,7 @@ import NavBar from "./components/NavBar.vue";
 </script>
 
 <template>
-  <header class="bg-amber-50 shadow">
+  <header class="bg-amber-50 shadow sticky top-0 z-50">
     <div class="container mx-auto flex items-center justify-between px-4 py-4">
       <Branding />
       <NavBar />
@@ -18,7 +18,3 @@ import NavBar from "./components/NavBar.vue";
 
   <Footer></Footer>
 </template>
-
-<style>
-@import "tailwindcss";
-</style>
