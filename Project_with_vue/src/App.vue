@@ -6,12 +6,11 @@ import NavBar from "./components/NavBar.vue";
 
 <template>
   <header class="bg-amber-50 shadow sticky top-0 z-50">
-    <div class="container mx-auto flex items-center justify-between px-4 py-4">
+    <div class="container mx-auto flex flex-col sm:flex-row items-center justify-between px-4 py-4">
       <Branding />
       <NavBar />
     </div>
   </header>
-
   <main class="min-h-[700px]">
     <router-view />
   </main>
