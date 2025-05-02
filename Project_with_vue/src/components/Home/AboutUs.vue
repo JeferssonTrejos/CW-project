@@ -25,10 +25,10 @@
           >
         </div>
         <div
-          class="md:w-1/2  h-96 rounded-lg overflow-hidden shadow-lg"
+          class="md:w-1/2 sm:w-3/4 w-full h-96 rounded-lg overflow-hidden shadow-lg"
         >
           <img
-            src="../../assets/Fresh-bakery-goods-in-supermarket.jpg"
+            src="https://thumbs.dreamstime.com/b/smiling-women-selling-fresh-pastry-loaves-two-happy-female-seller-bread-section-85188042.jpg"
             alt="Panadería El Trigo Dorado"
             fill
             class="object-cover w-full h-full"

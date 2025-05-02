@@ -6,7 +6,7 @@ const featuredProducts = [
     description:
       "Elaborado con masa madre natural y fermentación lenta de 24 horas para un sabor incomparable.",
     price: "$4.50",
-    image: "/src/assets/Fresh-bakery-goods-in-supermarket.jpg",
+    image: "https://i.pinimg.com/originals/4c/e1/b7/4ce1b72c97c678b0ca03fc78e82bf620.jpg",
   },
   {
     id: 2,
@@ -14,7 +14,7 @@ const featuredProducts = [
     description:
       "Crujientes por fuera, suaves por dentro. Elaborados con mantequilla francesa de primera calidad.",
     price: "$2.75",
-    image: "/src/assets/Fresh-bakery-goods-in-supermarket.jpg",
+    image: "https://avatars.mds.yandex.net/i?id=e9e700d595dd2faf645bc7f76b7a29c48a545615-4264887-images-thumbs&n=13",
   },
   {
     id: 3,
@@ -22,7 +22,7 @@ const featuredProducts = [
     description:
       "Nuestra especialidad de temporada con manzanas frescas y canela, sobre masa quebrada artesanal.",
     price: "$18.95",
-    image: "/src/assets/Fresh-bakery-goods-in-supermarket.jpg",
+    image: "https://avatars.mds.yandex.net/i?id=763536c7fa2b4d94232bcdd242f97282d20e3f3b-10018920-images-thumbs&n=13",
   },
 ];
 </script>

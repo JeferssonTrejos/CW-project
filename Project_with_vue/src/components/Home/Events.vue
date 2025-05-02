@@ -6,7 +6,7 @@ const upcomingEvents = [
     date: "15 de Julio, 2025",
     description:
       "Aprende los fundamentos de la panadería artesanal y llévate a casa tu propio pan recién horneado.",
-    image: "/src/assets/Fresh-bakery-goods-in-supermarket.jpg",
+    image: "https://avatars.mds.yandex.net/i?id=d0f6972d7ff3d3c10d0d5940681c081f-4884516-images-thumbs&n=13",
   },
   {
     id: 2,
@@ -14,7 +14,7 @@ const upcomingEvents = [
     date: "22 de Julio, 2025",
     description:
       "Ven a probar nuestra nueva línea de panes con granos antiguos y harinas especiales.",
-    image: "/src/assets/Fresh-bakery-goods-in-supermarket.jpg",
+    image: "https://www.javea.com/wp-content/uploads/2016/03/pasteles-austriaco-cafe-wien-1-770x578.jpg",
   },
 ];
 </script>

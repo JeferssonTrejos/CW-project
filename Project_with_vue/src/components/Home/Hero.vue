@@ -2,7 +2,7 @@
   <section className="relative bg-amber-800/90  text-white w-full">
     <div class="absolute inset-0 z-0 overflow-hidden">
       <img
-        src="../../assets/Fresh-bakery-goods-in-supermarket.jpg"
+        src="https://www.kehe.com/wp-content/uploads/2024/07/Untitled-design-1-1.jpg"
         alt="Fondo de panes artesanales"
         class="object-cover w-full h-full opacity-40"
       />
@@ -35,4 +35,5 @@
       </div>
     </div>
   </section>
+
 </template>
