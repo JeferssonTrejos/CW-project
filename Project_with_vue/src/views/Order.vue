@@ -9,64 +9,24 @@ const products = [
   {
     category: "Panes Artesanales",
     items: [
-      {
-        id: 1,
-        name: "Pan de Masa Madre",
-        price: 4.5,
-        unit: "unidad",
-      },
-      {
-        id: 2,
-        name: "Baguette Tradicional",
-        price: 3.25,
-        unit: "unidad",
-      },
-      {
-        id: 3,
-        name: "Pan de Centeno",
-        price: 4.75,
-        unit: "unidad",
-      },
-      {
-        id: 4,
-        name: "Pan Integral Multigranos",
-        price: 5.5,
-        unit: "unidad",
-      },
+      { id: 1, name: "Pan de Masa Madre", price: 4.5, unit: "unidad" },
+      { id: 2, name: "Baguette Tradicional", price: 3.25, unit: "unidad" },
+      { id: 3, name: "Pan de Centeno", price: 4.75, unit: "unidad" },
+      { id: 4, name: "Pan Integral Multigranos", price: 5.5, unit: "unidad" },
     ],
   },
   {
     category: "Bollería",
     items: [
-      {
-        id: 5,
-        name: "Croissant de Mantequilla",
-        price: 2.5,
-        unit: "unidad",
-      },
-      {
-        id: 6,
-        name: "Pain au Chocolat",
-        price: 2.95,
-        unit: "unidad",
-      },
+      { id: 5, name: "Croissant de Mantequilla", price: 2.5, unit: "unidad" },
+      { id: 6, name: "Pain au Chocolat", price: 2.95, unit: "unidad" },
     ],
   },
   {
     category: "Pasteles y Tartas",
     items: [
-      {
-        id: 7,
-        name: "Tarta de Manzana",
-        price: 18.5,
-        unit: "unidad",
-      },
-      {
-        id: 8,
-        name: "Cheesecake",
-        price: 22.75,
-        unit: "unidad",
-      },
+      { id: 7, name: "Tarta de Manzana", price: 18.5, unit: "unidad" },
+      { id: 8, name: "Cheesecake", price: 22.75, unit: "unidad" },
     ],
   },
 ];
@@ -85,9 +45,23 @@ const formData = ref({
   termsAccepted: false,
 });
 
+// Computed para habilitar/deshabilitar el botón de confirmar
+const isFormValid = computed(() => {
+  return (
+    formData.value.name &&
+    formData.value.email &&
+    formData.value.phone &&
+    formData.value.termsAccepted
+  );
+});
+
 const handleSubmit = (event) => {
   event.preventDefault();
-  console.log("Formulario enviado:", formData.value);
+  if (isFormValid.value) {
+    console.log("Formulario enviado:", formData.value);
+  } else {
+    console.log("Formulario inválido. Por favor, completa todos los campos.");
+  }
 };
 </script>
 
@@ -175,7 +149,8 @@ const handleSubmit = (event) => {
           <!-- Botón de Confirmar -->
           <button
             type="submit"
-            class="bg-amber-600 text-white w-full py-4 rounded-lg hover:bg-amber-700 transition-colors font-medium text-lg cursor-pointer flex items-center justify-center"
+            :disabled="!isFormValid"
+            class="bg-amber-600 text-white w-full py-4 rounded-lg hover:bg-amber-700 transition-colors font-medium text-lg cursor-pointer flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed"
           >
             Confirmar Pedido
           </button>
