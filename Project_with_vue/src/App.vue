@@ -1,16 +1,12 @@
 <script setup>
 import Branding from "./components/Branding.vue";
+import Header from "./components/Header.vue";
 import Footer from "./components/Footer.vue";
 import NavBar from "./components/NavBar.vue";
 </script>
 
 <template>
-  <header class="bg-amber-50 shadow sticky top-0 z-50">
-    <div class="container mx-auto flex items-center justify-between px-4 py-4">
-      <Branding />
-      <NavBar />
-    </div>
-  </header>
+  <Header></Header>
 
   <main class="min-h-[700px]">
     <router-view />
