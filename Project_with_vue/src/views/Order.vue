@@ -58,8 +58,10 @@ const isFormValid = computed(() => {
 const handleSubmit = (event) => {
   event.preventDefault();
   if (isFormValid.value) {
+    alert("¡Pedido confirmado! Gracias por tu compra.");
     console.log("Formulario enviado:", formData.value);
   } else {
+    alert("Formulario inválido. Por favor, completa todos los campos.");
     console.log("Formulario inválido. Por favor, completa todos los campos.");
   }
 };
