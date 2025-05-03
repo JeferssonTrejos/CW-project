@@ -28,21 +28,24 @@ import {
           </p>
           <div class="flex space-x-4">
             <a
-              href="#"
+              href="https://www.facebook.com/"
+              target="_blank"
               class="hover:text-amber-300 transition-colors"
               aria-label="Facebook"
             >
               <Facebook />
             </a>
             <a
-              href="#"
+              href="https://www.instagram.com/"
+              target="_blank"
               class="hover:text-amber-300 transition-colors"
               aria-label="Instagram"
             >
               <Instagram />
             </a>
             <a
-              href="#"
+              href="https://www.x.com/"
+              target="_blank"
               class="hover:text-amber-300 transition-colors"
               aria-label="Twitter"
             >
