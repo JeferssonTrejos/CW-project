@@ -22,7 +22,7 @@
             <div class="flex items-center gap-4 mb-2">
               <h3 class="text-lg font-semibold text-[#8B4513]">{{ item.name }}</h3>
               <div class="flex-grow border-b border-dotted border-amber-300"></div>
-              <span class="text-lg font-bold text-[#FF6B00]">${{ item.price }}</span>
+              <span class="text-lg font-bold text-[#FF6B00]">{{ item.price }}</span>
             </div>
             <p class="text-[#8B4513]">{{ item.description }}</p>
           </div>
