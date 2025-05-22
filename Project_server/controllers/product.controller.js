@@ -1,8 +1,24 @@
 import Product from "../models/product.model.js";
 
-export const listProducts = async (req, res) => {
+//Obtiene TODO los productos en la base de datos
+
+export const getAllProducts = async (req, res) => {
   try {
-    const products = await Product.find();
+    const products = await Product.find().populate("category");
+    res.status(200).json(products);
+  } catch (err) {
+    res
+      .status(500)
+      .json({ message: "Error obteniendo la lista de TODOS productos" });
+  }
+};
+
+// Obtiene todos los productos disponibles
+export const getAvailableProducts = async (req, res) => {
+  try {
+    const products = await Product.find({ isActive: true }).populate(
+      "category"
+    );
     res.status(200).json(products);
   } catch (err) {
     res.status(500).json({ message: "Error obteniendo la lista de productos" });
@@ -24,18 +40,44 @@ export const createProduct = async (req, res) => {
     await newProduct.save();
     res.status(201).json(newProduct);
   } catch (err) {
+    console.error(err);
     res.status(500).json({ message: "Error creando el producto" });
   }
 };
 
+// Actualiza un producto existente
 export const updateProduct = async (req, res) => {
   try {
     const { id } = req.params;
     const { name, description, price, category, image } = req.body;
 
+    if (!id) {
+      return res.status(400).json({ message: "ID del producto es requerido" });
+    }
+
+    // Busca el producto por ID
+    const oldProduct = await Product.findById(id);
+    if (!oldProduct) {
+      return res.status(404).json({ message: "El producto no existe" });
+    }
+
+    // Usa los nuevos valores si se proporcionan, de lo contrario mantiene los antiguos
+    const nName = name ? name : oldProduct.name;
+    const nDescription = description ? description : oldProduct.description;
+    const nPrice = price ? price : oldProduct.price;
+    const nCategory = category ? category : oldProduct.category;
+    const nImage = image ? image : oldProduct.image;
+
+    // Actualiza el producto en la base de datos
     const updatedProduct = await Product.findByIdAndUpdate(
       id,
-      { name, description, price, category, image },
+      {
+        name: nName,
+        description: nDescription,
+        price: nPrice,
+        category: nCategory,
+        image: nImage,
+      },
       { new: true }
     );
 
@@ -77,7 +119,7 @@ export const getProductById = async (req, res) => {
   try {
     const { id } = req.params;
 
-    const product = await Product.findById(id);
+    const product = await Product.findById(id).populate("category");
     if (!product) {
       return res.status(404).json({ message: "Producto no encontrado" });
     }
@@ -91,7 +133,9 @@ export const getProductsByCategory = async (req, res) => {
   try {
     const { categoryId } = req.params;
 
-    const products = await Product.find({ category: categoryId });
+    const products = await Product.find({ category: categoryId }).populate(
+      "category"
+    );
     if (!products.length) {
       return res.status(404).json({ message: "No se encontraron productos" });
     }
@@ -102,7 +146,8 @@ export const getProductsByCategory = async (req, res) => {
 };
 
 export default {
-  listProducts,
+  getAllProducts,
+  getAvailableProducts,
   createProduct,
   updateProduct,
   markProductAsUnavailable,
