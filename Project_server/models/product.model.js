@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const productSchema = new mongoose.Schema({
+export const productSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
@@ -24,9 +24,13 @@ const productSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  isActive: {
+  isAvailable: {
     type: Boolean,
     default: true,
+  },
+  isHighlighted: {
+    type: Boolean,
+    default: false,
   },
 });
 

@@ -11,6 +11,9 @@ router.get("/all", productController.getAllProducts);
 // obtener todos los productos disponibles
 router.get("/", productController.getAvailableProducts);
 
+// obtener todos los productos disponibles destacados
+router.get("/highlighted", productController.getAllProductsHighlighted);
+
 // obtener producto por id
 router.get("/:id", productController.getProductById);
 

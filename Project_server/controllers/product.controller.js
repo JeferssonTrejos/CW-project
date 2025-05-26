@@ -1,7 +1,6 @@
 import Product from "../models/product.model.js";
 
 //Obtiene TODO los productos en la base de datos
-
 export const getAllProducts = async (req, res) => {
   try {
     const products = await Product.find().populate("category");
@@ -12,11 +11,23 @@ export const getAllProducts = async (req, res) => {
       .json({ message: "Error obteniendo la lista de TODOS productos" });
   }
 };
+// Obtiene todos los productos disponibles marcados como destacados
+export const getAllProductsHighlighted = async (req, res) => {
+  try {
+    const products = await Product.find({
+      isAvailable: true,
+      isHighlighted: true,
+    }).populate("category");
+    res.status(200).json(products);
+  } catch (err) {
+    res.status(500).json({ message: "Error obteniendo la lista de productos" });
+  }
+};
 
 // Obtiene todos los productos disponibles
 export const getAvailableProducts = async (req, res) => {
   try {
-    const products = await Product.find({ isActive: true }).populate(
+    const products = await Product.find({ isAvailable: true }).populate(
       "category"
     );
     res.status(200).json(products);
@@ -49,7 +60,8 @@ export const createProduct = async (req, res) => {
 export const updateProduct = async (req, res) => {
   try {
     const { id } = req.params;
-    const { name, description, price, category, image } = req.body;
+    const { name, description, price, category, image, isHighlighted } =
+      req.body;
 
     if (!id) {
       return res.status(400).json({ message: "ID del producto es requerido" });
@@ -63,10 +75,13 @@ export const updateProduct = async (req, res) => {
 
     // Usa los nuevos valores si se proporcionan, de lo contrario mantiene los antiguos
     const nName = name ? name : oldProduct.name;
-    const nDescription = description ? description : oldProduct.description;
-    const nPrice = price ? price : oldProduct.price;
-    const nCategory = category ? category : oldProduct.category;
-    const nImage = image ? image : oldProduct.image;
+    const nDescription = description ? description : oldProduct?.description;
+    const nPrice = price ? price : oldProduct?.price;
+    const nCategory = category ? category : oldProduct?.category;
+    const nImage = image ? image : oldProduct?.image;
+    const nIsHighlighted = isHighlighted
+      ? isHighlighted
+      : oldProduct?.isHighlighted;
 
     // Actualiza el producto en la base de datos
     const updatedProduct = await Product.findByIdAndUpdate(
@@ -77,6 +92,7 @@ export const updateProduct = async (req, res) => {
         price: nPrice,
         category: nCategory,
         image: nImage,
+        isHighlighted: nIsHighlighted,
       },
       { new: true }
     );
@@ -94,7 +110,7 @@ export const markProductAsUnavailable = async (req, res) => {
 
     const updatedProduct = await Product.findByIdAndUpdate(
       id,
-      { isActive: false },
+      { isAvailable: false },
       { new: true }
     );
 
@@ -147,6 +163,7 @@ export const getProductsByCategory = async (req, res) => {
 
 export default {
   getAllProducts,
+  getAllProductsHighlighted,
   getAvailableProducts,
   createProduct,
   updateProduct,

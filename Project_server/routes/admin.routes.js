@@ -6,9 +6,12 @@ import userController from "../controllers/user.controller.js"; // Nuevo control
 
 const router = express.Router();
 
-// Listar todos los usuarios
-router.get("/", authMiddleware, userController.listUsers);
+router.use(authMiddleware); // Middleware de autenticación
+router.use(roleMiddleware(["admin"])); // Middleware para verificar rol de administrador
 
-router.put("/:id/role", authMiddleware, userController.updateUserRole);
+// Listar todos los usuarios
+router.get("/", userController.listUsers);
+
+router.put("/:id/role", userController.updateUserRole);
 
 export default router;

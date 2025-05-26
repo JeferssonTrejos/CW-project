@@ -94,6 +94,7 @@ const login = async (req, res) => {
       {
         id: user._id,
         name: user.name,
+        email: user.email,
         role: user.role,
       },
       process.env.JWT_SECRET,
@@ -123,6 +124,7 @@ const getProfile = (req, res) => {
     user: {
       id: req.user.id,
       name: req.user.name,
+      email: req.user.email,
       role: req.user.role,
     },
   });
