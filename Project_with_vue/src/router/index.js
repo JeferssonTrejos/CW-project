@@ -8,6 +8,7 @@ import Products from "../views/Products.vue";
 import Order from "../views/Order.vue";
 import Contact from "../views/Contact.vue";
 import NotFound from "../views/NotFound.vue";
+import Profile from "@/views/Profile.vue";
 
 const routes = [
   {
@@ -41,6 +42,12 @@ const routes = [
     path: "/order",
     name: "Order",
     component: Order,
+  },
+  {
+    path: "/profile",
+    name: "profile",
+    component: Profile,
+    meta: { requiresAuth: true },
   },
   {
     path: "/:pathMatch(.*)*",

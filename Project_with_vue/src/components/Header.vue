@@ -37,12 +37,13 @@ function toggleMenu() {
             <div
               class="flex items-center hover:bg-black/20 p-2 rounded-lg cursor-pointer"
             >
-              <p
+              <router-link
+                to="/profile"
                 class="text-amber-800 font-medium text-center flex items-center h-full"
               >
                 Hola, {{ authStore.user?.name?.slice(0, 12) }}
                 {{ authStore.user?.name?.length > 12 ? "..." : "" }}
-              </p>
+              </router-link>
             </div>
             <router-link
               to="/order"

@@ -5,7 +5,7 @@ const cookieOptions = {
   httpOnly: true,
   secure: process.env.NODE_ENV === "production",
   sameSite: "lax",
-  maxAge: 60 * 60 * 1000, // 1 hora en ms
+  maxAge: 60 * 60 * 24000, // 1 hora en ms
 };
 
 // Metodo para registrar usuario
@@ -36,7 +36,7 @@ const register = async (req, res) => {
         role: user.role,
       },
       process.env.JWT_SECRET,
-      { expiresIn: "1h" }
+      { expiresIn: "24h" }
     );
 
     // Enviar cookie
@@ -98,7 +98,7 @@ const login = async (req, res) => {
         role: user.role,
       },
       process.env.JWT_SECRET,
-      { expiresIn: "1h" }
+      { expiresIn: "24h" }
     );
     // Enviar cookie
     res.cookie("token", token, cookieOptions);
