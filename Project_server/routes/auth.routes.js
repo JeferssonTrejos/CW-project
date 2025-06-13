@@ -4,11 +4,11 @@ import authMiddleware from "../middlewares/auth.middleware.js";
 
 const router = express.Router();
 
-// Registro
-router.post("/register", authController.register);
-
 // Login
 router.post("/login", authController.login);
+
+// Registro
+router.post("/register", authController.register);
 
 // Ruta protegida
 router.get("/profile", authMiddleware, authController.getProfile);

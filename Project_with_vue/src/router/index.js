@@ -1,4 +1,8 @@
 import { createRouter, createWebHistory } from "vue-router";
+import { useAuthStore } from "../stores/auth";
+import Login from "../views/Login.vue";
+import Register from "../views/Register.vue";
+
 import Home from "../views/Home.vue";
 import Products from "../views/Products.vue";
 import Order from "../views/Order.vue";
@@ -10,6 +14,18 @@ const routes = [
     path: "/",
     name: "Home",
     component: Home,
+  },
+  {
+    path: "/login",
+    name: "Login",
+    component: Login,
+    meta: { hideLayout: true },
+  },
+  {
+    path: "/register",
+    name: "Register",
+    component: Register,
+    meta: { hideLayout: true },
   },
   {
     path: "/products",
@@ -36,6 +52,53 @@ const routes = [
 const router = createRouter({
   history: createWebHistory("/"),
   routes,
+});
+
+// Guard de navegación
+router.beforeEach(async (to, from, next) => {
+  const authStore = useAuthStore();
+
+  // Verificar autenticación solo una vez al cargar la app
+  if (!authStore.user && !authStore.isAuthenticated) {
+    await authStore.checkAuth();
+  }
+
+  // Verificar si requiere autenticación
+  if (to.meta.requiresAuth && !authStore.isAuthenticated) {
+    next("/login");
+    return;
+  }
+
+  // Verificar roles si están definidos
+  if (to.meta.roles && authStore.isAuthenticated) {
+    const userRole = authStore.userRole;
+    if (!to.meta.roles.includes(userRole)) {
+      // Redirigir según el rol del usuario
+      if (userRole === "admin") {
+        next("/admin");
+      } else if (userRole === "moderator") {
+        next("/moderator");
+      } else {
+        next("/dashboard");
+      }
+      return;
+    }
+  }
+
+  // Verificar si es página de invitado
+  if (to.meta.requiresGuest && authStore.isAuthenticated) {
+    const userRole = authStore.userRole;
+    if (userRole === "admin") {
+      next("/admin");
+    } else if (userRole === "moderator") {
+      next("/moderator");
+    } else {
+      next("/dashboard");
+    }
+    return;
+  }
+
+  next();
 });
 
 export default router;
