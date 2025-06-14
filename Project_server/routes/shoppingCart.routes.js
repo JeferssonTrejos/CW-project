@@ -10,5 +10,6 @@ router.get("/", shoppingCartController.getShoppingcart);
 router.post("/add", shoppingCartController.addToShoppingCart);
 router.put("/item/:id", shoppingCartController.updateCartItem);
 router.delete("/item/:id", shoppingCartController.removeFromCart);
+router.delete("/clear", shoppingCartController.clearCart);
 
 export default router;

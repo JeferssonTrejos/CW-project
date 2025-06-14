@@ -59,12 +59,19 @@
                 {{ formatPrice(product.price) }}
               </span>
 
-              <div v-if="product.isAvailable" class="w-full">
-                <AddToCartButton 
+              <div v-if="product.isAvailable" class="w-full">                <AddToCartButton 
                   :product-id="product._id" 
                   button-text="Agregar al carrito" 
                   @product-added="onProductAdded"
                 />
+                
+                <!-- Contador de productos añadidos -->
+                <div v-if="cartCounts[product._id] && cartCounts[product._id] > 0" 
+                     class="mt-2 text-center text-amber-800 font-medium">
+                  <span class="bg-amber-100 px-3 py-1 rounded-full text-sm">
+                    {{ cartCounts[product._id] }} en tu carrito
+                  </span>
+                </div>
               </div>
 
               <span
@@ -99,48 +106,96 @@
 
 <script setup>
 import AddToCartButton from '@/components/Cart/AddToCartButton.vue';
+import api from '@/services/api';
+import { ref, onMounted, onBeforeUnmount } from 'vue';
 
-defineProps({
+const props = defineProps({
   products: {
     type: Array,
     default: () => []
   }
-})
+});
 
-defineEmits(['add-to-cart', 'clear-filters'])
+const emits = defineEmits(['add-to-cart', 'clear-filters']);
 
+const cartCounts = ref({});
+
+// Función para obtener las cantidades actuales de productos en el carrito
+const fetchCartCounts = async () => {
+  try {
+    const response = await api.get('/shoppingcart');
+    const cart = response.data;
+    
+    // Resetear contadores
+    const counts = {};
+    
+    // Si hay productos en el carrito, actualizar contadores
+    if (cart && cart.items && cart.items.length > 0) {
+      cart.items.forEach(item => {
+        counts[item.product._id] = item.quantity;
+      });
+    }
+    
+    cartCounts.value = counts;
+  } catch (error) {
+    console.error('Error al obtener el carrito:', error);
+  }
+};
+
+// Actualizar el contador para un producto específico
+const onProductAdded = (event) => {
+  const { productId, quantity } = event;
+  
+  // Actualizar el contador local
+  if (cartCounts.value[productId]) {
+    cartCounts.value[productId] += quantity;
+  } else {
+    cartCounts.value[productId] = quantity;
+  }
+  
+  // Disparar evento personalizado para actualizar el icono del carrito
+  window.dispatchEvent(new CustomEvent('cart-updated'));
+};
+
+// Escuchar evento de actualización del carrito desde otros componentes
+const handleCartUpdated = () => {
+  fetchCartCounts();
+};
+
+onMounted(() => {
+  fetchCartCounts();
+  window.addEventListener('cart-updated', handleCartUpdated);
+});
+
+onBeforeUnmount(() => {
+  window.removeEventListener('cart-updated', handleCartUpdated);
+});
 
 const formatPrice = (price) => {
-  if (!price) return 'Precio no disponible'
+  if (!price) return 'Precio no disponible';
   
   if (typeof price === 'string' && price.includes('$')) {
-    return price
+    return price;
   }
   
   if (typeof price === 'number') {
-    return `$${price.toFixed(2)}`
+    return `$${price.toFixed(2)}`;
   }
   
-  return `$${parseFloat(price).toFixed(2)}`
-}
+  return `$${parseFloat(price).toFixed(2)}`;
+};
 
 const getCategoryName = (category) => {
-  if (!category) return 'Sin categoría'
+  if (!category) return 'Sin categoría';
   
   if (typeof category === 'object' && category.name) {
-    return category.name
+    return category.name;
   }
   
-  return category
-}
-
+  return category;
+};
 
 const handleImageError = (event) => {
-  event.target.src = 'https://avatars.mds.yandex.net/get-altay/13451497/2a0000018ed9af680cbea3c965bebbc1a280/XXXL'
-}
-
-const onProductAdded = () => {
-  // Disparar evento personalizado para actualizar el contador del carrito
-  window.dispatchEvent(new CustomEvent('cart-updated'));
-}
+  event.target.src = 'https://avatars.mds.yandex.net/get-altay/13451497/2a0000018ed9af680cbea3c965bebbc1a280/XXXL';
+};
 </script>

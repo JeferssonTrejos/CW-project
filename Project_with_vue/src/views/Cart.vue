@@ -88,18 +88,27 @@
                 <span class="font-bold text-amber-800">${{ formatPrice(calculateTotal()) }}</span>
               </div>
             </div>
-            
-            <button @click="proceedToCheckout" 
+              <button @click="proceedToCheckout" 
                     class="w-full bg-amber-600 hover:bg-amber-700 text-white font-medium py-3 px-4 rounded-lg transition-colors">
               Proceder al pago
             </button>
             
-            <router-link 
-              to="/products" 
-              class="block text-center mt-4 text-amber-600 hover:text-amber-700"
-            >
-              Seguir comprando
-            </router-link>
+            <div class="flex justify-between mt-4">
+              <router-link 
+                to="/products" 
+                class="text-amber-600 hover:text-amber-700"
+              >
+                Seguir comprando
+              </router-link>
+              
+              <button 
+                @click="clearCart" 
+                class="text-red-600 hover:text-red-700 font-medium"
+                :disabled="clearing"
+              >
+                {{ clearing ? 'Vaciando...' : 'Vaciar carrito' }}
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -111,12 +120,12 @@
 import api from '@/services/api.js';
 
 export default {
-  name: 'CartView',
-  data() {
+  name: 'CartView',  data() {
     return {
       cart: null,
       loading: true,
-      error: null
+      error: null,
+      clearing: false
     }
   },
   mounted() {
@@ -128,27 +137,20 @@ export default {
       this.error = null;
       
       try {
-        const token = localStorage.getItem('token');
-        if (!token) {
-          this.error = "Debes iniciar sesión para ver tu carrito";
-          this.loading = false;
-          return;
-        }
-        
-        const response = await api.get('/shoppingcart', {
-          headers: {
-            'Authorization': `Bearer ${token}`
-          }
-        });
-        
+        const response = await api.get('/shoppingcart');
         this.cart = response.data;
       } catch (error) {
         console.error('Error al cargar el carrito:', error);
-        this.error = error.response?.data?.error || 'Error al cargar el carrito';
         
         if (error.response?.status === 401) {
-          // Si es error de autenticación, mostrar mensaje adecuado
-          this.error = "Sesión no válida. Por favor inicia sesión nuevamente.";
+          // Si es error de autenticación, mostrar mensaje adecuado y redirigir al login
+          this.error = "Necesitas iniciar sesión para ver tu carrito";
+          setTimeout(() => {
+            localStorage.setItem('redirectAfterLogin', '/cart');
+            this.$router.push('/login');
+          }, 2000);
+        } else {
+          this.error = error.response?.data?.error || 'Error al cargar el carrito';
         }
       } finally {
         this.loading = false;
@@ -157,12 +159,11 @@ export default {
     
     async updateQuantity(productId, quantity) {
       try {
-        const token = localStorage.getItem('token');
-        await api.put(`/shoppingcart/item/${productId}`, 
-          { quantity }, 
-          { headers: { 'Authorization': `Bearer ${token}` } }
-        );
+        await api.put(`/shoppingcart/item/${productId}`, { quantity });
         await this.fetchCart();
+        
+        // Disparar evento para actualizar el contador del carrito
+        window.dispatchEvent(new CustomEvent('cart-updated'));
       } catch (error) {
         console.error('Error al actualizar cantidad:', error);
         this.error = error.response?.data?.error || 'Error al actualizar la cantidad';
@@ -181,11 +182,11 @@ export default {
     
     async removeItem(productId) {
       try {
-        const token = localStorage.getItem('token');
-        await api.delete(`/shoppingcart/item/${productId}`, {
-          headers: { 'Authorization': `Bearer ${token}` }
-        });
+        await api.delete(`/shoppingcart/item/${productId}`);
         await this.fetchCart();
+        
+        // Disparar evento para actualizar el contador del carrito
+        window.dispatchEvent(new CustomEvent('cart-updated'));
       } catch (error) {
         console.error('Error al eliminar producto:', error);
         this.error = error.response?.data?.error || 'Error al eliminar el producto';
@@ -202,9 +203,28 @@ export default {
     formatPrice(price) {
       return Number(price).toFixed(2);
     },
-    
-    proceedToCheckout() {
+      proceedToCheckout() {
       this.$router.push('/order');
+    },
+    
+    async clearCart() {
+      if (!confirm('¿Estás seguro de que deseas vaciar tu carrito de compras?')) {
+        return;
+      }
+      
+      try {
+        this.clearing = true;
+        await api.delete('/shoppingcart/clear');
+          // Actualizar vista y contador
+        this.cart = { items: [] };
+        window.dispatchEvent(new CustomEvent('cart-updated'));
+        
+        alert('Carrito vaciado correctamente');      } catch (error) {
+        console.error('Error al vaciar el carrito:', error);
+        alert('Error al vaciar el carrito');
+      } finally {
+        this.clearing = false;
+      }
     }
   }
 }
