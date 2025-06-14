@@ -15,32 +15,24 @@ defineProps({
     </h3>
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
       <div>
-        <label for="name" class="block text-amber-800 font-medium mb-2">
-          Nombre Completo <span class="text-red-500">*</span>
+        <label class="block text-amber-800 font-medium mb-2">
+          Nombre Completo
         </label>
-        <input
-          v-model="formData.name"
-          type="text"
-          id="name"
-          name="name"
-          required
-          placeholder="Tu nombre"
-          class="w-full px-4 py-3 rounded-lg border border-amber-200 focus:border-amber-500 focus:ring-2 focus:ring-amber-200 outline-none transition"
-        />
+        <div
+          class="w-full px-4 py-3 rounded-lg border border-amber-200 bg-gray-100 text-amber-800"
+        >
+          {{ formData.name }}
+        </div>
       </div>
       <div>
         <label for="email" class="block text-amber-800 font-medium mb-2">
-          Correo Electrónico <span class="text-red-500">*</span>
+          Correo Electrónico
         </label>
-        <input
-          v-model="formData.email"
-          type="email"
-          id="email"
-          name="email"
-          required
-          placeholder="tucorreo@ejemplo.com"
-          class="w-full px-4 py-3 rounded-lg border border-amber-200 focus:border-amber-500 focus:ring-2 focus:ring-amber-200 outline-none transition"
-        />
+        <div
+          class="w-full px-4 py-3 rounded-lg border border-amber-200 bg-gray-100 text-amber-800"
+        >
+          {{ formData.email }}
+        </div>
       </div>
     </div>
     <div class="mt-6">
@@ -49,7 +41,7 @@ defineProps({
       </label>
       <input
         v-model="formData.phone"
-        type="tel"
+        type="number"
         id="phone"
         name="phone"
         required

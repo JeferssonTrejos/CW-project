@@ -22,8 +22,8 @@ defineProps({
             v-model="formData.deliveryMethod"
             type="radio"
             id="pickup"
+            value="1"
             name="delivery-method"
-            value="pickup"
             class="mr-3 h-5 w-5 text-amber-600"
             checked
           />
@@ -37,7 +37,7 @@ defineProps({
             type="radio"
             id="delivery"
             name="delivery-method"
-            value="delivery"
+            value="2"
             class="mr-3 h-5 w-5 text-amber-600"
           />
           <label for="delivery" class="text-amber-800 flex items-center">
@@ -81,14 +81,14 @@ defineProps({
             />
           </div>
           <div>
-            <label for="zip" class="block text-amber-800 font-medium mb-2">
+            <label for="postalCode" class="block text-amber-800 font-medium mb-2">
               Código Postal
             </label>
             <input
-              v-model="formData.zip"
+              v-model="formData.postalCode"
               type="text"
-              id="zip"
-              name="zip"
+              id="postalCode"
+              name="postalCode"
               class="w-full px-4 py-3 rounded-lg outline-none border-2 border-amber-200 focus:border-amber-500 transition"
             />
           </div>

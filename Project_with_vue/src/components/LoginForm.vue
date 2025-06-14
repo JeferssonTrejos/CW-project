@@ -70,9 +70,9 @@ const handleLogin = async () => {
         </div>
         <p class="register-link text-center mt-6 text-sm">
           ¿No tienes cuenta?
-          <router-link to="/register" class="text-blue-600 hover:underline"
-            >Regístrate aquí</router-link
-          >
+          <router-link to="/register" class="text-blue-600 hover:underline">
+            Regístrate aquí
+          </router-link>
         </p>
       </form>
     </div>

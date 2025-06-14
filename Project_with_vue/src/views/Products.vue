@@ -9,6 +9,7 @@ import ProductsGrid from "@/components/Products/ProductsGrid.vue";
 import ProductsInfo from "@/components/Products/ProductsInfo.vue";
 import ProductsNotification from "@/components/Products/ProductsNotification.vue";
 import ProductService from "../services/Product";
+import ShoppingCartService from "@/services/ShoppingCart";
 
 const products = ref([]);
 const categories = ref([]);
@@ -110,11 +111,14 @@ const addToCart = async (product) => {
   }
 
   try {
-    await api.post("/shoppingcart/add", {
-      productId: product._id,
-      quantity: 1,
-    });
-    showNotification(`${product.name} agregado al carrito`);
+    // await api.post("/shoppingcart/add", {
+    //   productId: product._id,
+    //   quantity: 1,
+    // });
+    const response = await ShoppingCartService.addToShoppingCart(product._id);
+    if (response.status == 200) {
+      showNotification(`${product.name} agregado al carrito`);
+    }
   } catch (error) {
     const errorMessages = {
       401: "Debes iniciar sesión para agregar productos al carrito",
