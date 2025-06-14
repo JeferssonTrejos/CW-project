@@ -17,5 +17,5 @@ export const corsOptions = {
     }
   },
   credentials: true, // Permitir cookies / headers de autenticación
-  optionsSuccessStatus: 200, // Para compatibilidad con navegadores antiguos
+  // optionsSuccessStatus: 200, // Para compatibilidad con navegadores antiguos
 };
