@@ -20,7 +20,7 @@
 //   optionsSuccessStatus: 200, // Para compatibilidad con navegadores antiguos
 // };
 // Configuración de CORS para producción
-const corsOptions = {
+export const corsOptions = {
   origin: [
     "https://panaderiaelrosariov2.netlify.app", // Reemplaza con tu dominio de Netlify
     "http://localhost:3000", // Para desarrollo local
