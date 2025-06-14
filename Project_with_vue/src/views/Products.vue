@@ -111,10 +111,6 @@ const addToCart = async (product) => {
   }
 
   try {
-    // await api.post("/shoppingcart/add", {
-    //   productId: product._id,
-    //   quantity: 1,
-    // });
     const response = await ShoppingCartService.addToShoppingCart(product._id);
     if (response.status == 200) {
       showNotification(`${product.name} agregado al carrito`);
@@ -149,11 +145,6 @@ const clearFilters = () => {
   selectedCategory.value = "";
   fetchProducts();
 };
-
-// // Watchers para reactividad
-// watch(selectedCategory, () => {
-//   // Los computed se actualizan automáticamente
-// });
 
 // Inicialización
 onMounted(() => {
