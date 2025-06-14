@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = "https://cw-project-dl2r.onrender.com/api";
+const API_URL = "https://cw-project-dl2r.onrender.com/";
 
 // const API_URL = "http://localhost:3000/api";
 

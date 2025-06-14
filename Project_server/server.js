@@ -13,7 +13,6 @@ import categoryRoutes from "./routes/category.routes.js";
 import shoppingCartRoutes from "./routes/shoppingCart.routes.js";
 import orderRoutes from "./routes/order.routes.js";
 
-
 dotenv.config();
 
 const app = express();
@@ -27,15 +26,15 @@ app.use(cookieParser());
 app.use(cors(corsOptions));
 
 // Rutas
-app.use("/api/admins", adminRoutes);
-app.use("/api/auth", authRoutes);
-app.use("/api/products", productRoutes);
-app.use("/api/categories", categoryRoutes);
-app.use("/api/shoppingcart", shoppingCartRoutes);
-app.use("/api/orders", orderRoutes);
+app.use("/admins", adminRoutes);
+app.use("/auth", authRoutes);
+app.use("/products", productRoutes);
+app.use("/categories", categoryRoutes);
+app.use("/shoppingcart", shoppingCartRoutes);
+app.use("/orders", orderRoutes);
 
 // Prueba de ruta
-app.get("/api", (req, res) => {
+app.get("/", (req, res) => {
   res.status(200).json({ message: "working" });
 });
 
