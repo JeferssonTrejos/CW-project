@@ -1,197 +1,304 @@
 <template>
   <div class="bg-amber-50">
-     <!-- Banner principal -->
-  <section class="relative bg-amber-800 text-white py-12">
-    <div class="absolute inset-0 z-0 opacity-40">
-      <img src="https://avatars.mds.yandex.net/get-altay/13451497/2a0000018ed9af680cbea3c965bebbc1a280/XXXL" alt="Fondo de panadería" class="object-cover w-full h-full" />
-    </div>
-    <div class="container mx-auto px-4 relative z-10 text-center">
-      <h1 class="text-4xl md:text-5xl font-bold mb-4">Nuestros Productos</h1>
-      <p class="text-lg max-w-2xl mx-auto">
-        Descubre nuestra selección de panes artesanales, bollería, pasteles y más, elaborados diariamente con
-        ingredientes de primera calidad y técnicas tradicionales.
-      </p>
-    </div>
-  </section>
+    
+    <ProductsBanner />
 
-  <!-- Navegación rápida -->
-  <nav class="container mx-auto px-4 py-8">
-    <div class="flex flex-wrap justify-center gap-4">
-      <a
-        v-for="section in ['panes', 'bolleria', 'pasteles', 'bebidas']"
-        :key="section"
-        :href="'#' + section"
-        class="bg-amber-100 hover:bg-amber-200 text-amber-800 px-4 py-2 rounded-md transition-colors"
-      >
-        {{ section.charAt(0).toUpperCase() + section.slice(1) }}
-      </a>
-    </div>
-  </nav>
+    
+    <ProductsFilters
+      :selected-filter="selectedFilter"
+      :search-term="searchTerm"
+      :selected-category="selectedCategory"
+      :categories="categories"
+      :product-count="filteredProducts.length"
+      @filter-change="handleFilterChange"
+      @search-change="handleSearchChange"
+      @category-change="handleCategoryChange"
+      @clear-filters="clearFilters"
+    />
 
-  <!-- Secciones del menú -->
-  <main class=" container mx-auto px-4 py-8 space-y-12">
-    <section id="panes">
-      <MenuCategory title="Panes Artesanales" :items="menuData.panes" />
-    </section>
-    <section id="bolleria">
-      <MenuCategory title="Bollería" :items="menuData.bolleria" />
-    </section>
-    <section id="pasteles">
-      <MenuCategory title="Pasteles y Tartas" :items="menuData.pasteles" />
-    </section>
-    <section id="bebidas">
-      <MenuCategory title="Bebidas" :items="menuData.bebidas" />
-    </section>
+    
+    <ProductsNavigation
+      :categories="categories"
+      :selected-category="selectedCategory"
+      @quick-filter="quickFilter"
+    />
 
-    <!-- Información adicional -->
-    <section class="bg-amber-50 p-6 rounded-lg">
-      <h3 class="text-xl font-semibold text-amber-800 mb-2">Información Importante</h3>
-      <ul class="list-disc list-inside text-amber-700 space-y-1">
-        <li>Todos nuestros productos se elaboran diariamente.</li>
-        <li>Infórmenos si tiene alguna alergia o intolerancia alimentaria.</li>
-        <li>Precios incluyen IVA.</li>
-        <li>Disponibilidad sujeta a existencias del día.</li>
-      </ul>
-    </section>
+    
+    <ProductsStates
+      :loading="loading"
+      :error="error"
+      @retry="fetchProducts"
+    />
 
-    <!-- Llamado a la acción -->
-    <section class="text-center">
-      <p class="text-amber-700 mb-4">¿Listo para probar nuestros deliciosos productos?</p>
-      <router-link 
-        to="/order" 
-        class="inline-block bg-amber-600 text-white px-6 py-3 rounded-lg hover:bg-amber-700 transition-colors"
-      >
-        Hacer un Pedido
-      </router-link>
-    </section>
-  </main>
+    
+    <main v-if="!loading && !error" class="container mx-auto px-4 py-8">
+      <ProductsGrid
+        :products="filteredProducts"
+        @add-to-cart="addToCart"
+        @clear-filters="clearFilters"
+      />
+
+      
+      <ProductsInfo :cart-count="cartCount" />
+    </main>
+
+    
+    <ProductsNotification
+      :show="showCartNotification"
+      :message="cartNotificationMessage"
+    />
   </div>
 </template>
 
 <script setup>
+import { ref, onMounted, computed } from 'vue'
+import api from '@/services/api.js'
+import ProductsBanner from '@/components/Products/ProductsBanner.vue'
+import ProductsFilters from '@/components/Products/ProductsFilters.vue'
+import ProductsNavigation from '@/components/Products/ProductsNavigation.vue'
+import ProductsStates from '@/components/Products/ProductsStates.vue'
+import ProductsGrid from '@/components/Products/ProductsGrid.vue'
+import ProductsInfo from '@/components/Products/ProductsInfo.vue'
+import ProductsNotification from '@/components/Products/ProductsNotification.vue'
 
-import MenuCategory from "@/components/Products/MenuCategory.vue"
 
-const menuData = {
-  panes: [
-    {
-      id: 1,
-      name: "Pan de Masa Madre",
-      description: "Pan rústico elaborado con masa madre natural y fermentación lenta de 24 horas.",
-      price: "$4.50",
-      image: "https://avatars.mds.yandex.net/get-altay/13451497/2a0000018ed9af680cbea3c965bebbc1a280/XXXL"
-    },
-    {
-      id: 2,
-      name: "Baguette Tradicional",
-      description: "Crujiente por fuera, tierna por dentro. Elaborada con harina de trigo francesa.",
-      price: "$3.25",
-      image: "https://avatars.mds.yandex.net/get-altay/13451497/2a0000018ed9af680cbea3c965bebbc1a280/XXXL"
-    },
-    {
-      id: 3,
-      name: "Pan de Centeno",
-      description: "Pan denso y nutritivo elaborado con harina de centeno y semillas.",
-      price: "$4.75",
-      image: "https://avatars.mds.yandex.net/get-altay/13451497/2a0000018ed9af680cbea3c965bebbc1a280/XXXL"
-    },
-    {
-      id: 4,
-      name: "Pan Integral Multigranos",
-      description: "Elaborado con harinas integrales y una mezcla de semillas y granos.",
-      price: "$5.50",
-      image: "https://avatars.mds.yandex.net/get-altay/13451497/2a0000018ed9af680cbea3c965bebbc1a280/XXXL"
+const products = ref([])
+const filteredProducts = ref([])
+const categories = ref([])
+const loading = ref(true)
+const error = ref(null)
+
+// Filtros
+const selectedFilter = ref('available') 
+const selectedCategory = ref('')
+const searchTerm = ref('')
+
+const cartCount = ref(0) 
+const showCartNotification = ref(false)
+const cartNotificationMessage = ref('')
+
+
+const fetchProducts = async () => {
+  try {
+    loading.value = true
+    error.value = null
+    
+    let endpoint = '/products'
+    
+    
+    if (selectedFilter.value === 'all') {
+      endpoint = '/products/all'  
+    } else if (selectedFilter.value === 'available') {
+      endpoint = '/products'      
+    } else if (selectedFilter.value === 'highlighted') {
+      endpoint = '/products/highlighted'  
     }
-  ],
-  bolleria: [
-    {
-      id: 1,
-      name: "Croissant de Mantequilla",
-      description: "Clásico croissant francés elaborado con mantequilla de primera calidad.",
-      price: "$2.50",
-      image: "https://avatars.mds.yandex.net/get-altay/13451497/2a0000018ed9af680cbea3c965bebbc1a280/XXXL"
-    },
-    {
-      id: 2,
-      name: "Pain au Chocolat",
-      description: "Hojaldre relleno de chocolate negro de alta calidad.",
-      price: "$2.95",
-      image: "https://avatars.mds.yandex.net/get-altay/13451497/2a0000018ed9af680cbea3c965bebbc1a280/XXXL"
-    },
-    {
-      id: 3,
-      name: "Caracola de Canela",
-      description: "Suave masa de brioche con relleno de canela y azúcar, coronada con glaseado.",
-      price: "$3.50",
-      image: "https://avatars.mds.yandex.net/get-altay/13451497/2a0000018ed9af680cbea3c965bebbc1a280/XXXL"
-    },
-    {
-      id: 4,
-      name: "Napolitana de Crema",
-      description: "Hojaldre relleno de crema pastelera casera.",
-      price: "$3.25",
-      image: "https://avatars.mds.yandex.net/get-altay/13451497/2a0000018ed9af680cbea3c965bebbc1a280/XXXL"
-    }
-  ],
-  pasteles: [
-    {
-      id: 1,
-      name: "Tarta de Manzana",
-      description: "Tarta casera con manzanas frescas y canela sobre masa quebrada artesanal.",
-      price: "$18.50",
-      image: "https://avatars.mds.yandex.net/get-altay/13451497/2a0000018ed9af680cbea3c965bebbc1a280/XXXL"
-    },
-    {
-      id: 2,
-      name: "Cheesecake",
-      description: "Cremoso cheesecake horneado con base de galleta y cobertura de frutos rojos.",
-      price: "$22.75",
-      image: "https://avatars.mds.yandex.net/get-altay/13451497/2a0000018ed9af680cbea3c965bebbc1a280/XXXL"
-    },
-    {
-      id: 3,
-      name: "Selva Negra",
-      description: "Clásico pastel de chocolate con cerezas y nata montada.",
-      price: "$24.25",
-      image: "https://avatars.mds.yandex.net/get-altay/13451497/2a0000018ed9af680cbea3c965bebbc1a280/XXXL"
-    },
-    {
-      id: 4,
-      name: "Carrot Cake",
-      description: "Pastel húmedo de zanahoria con nueces y frosting de queso crema.",
-      price: "$20.95",
-      image: "https://avatars.mds.yandex.net/get-altay/13451497/2a0000018ed9af680cbea3c965bebbc1a280/XXXL"
-    }
-  ],
-  bebidas: [
-    {
-      id: 1,
-      name: "Café Espresso",
-      description: "Café de especialidad de tueste medio con notas a chocolate y frutos secos.",
-      price: "$1.50",
-      image: "https://avatars.mds.yandex.net/get-altay/13451497/2a0000018ed9af680cbea3c965bebbc1a280/XXXL"
-    },
-    {
-      id: 2,
-      name: "Cappuccino",
-      description: "Espresso con leche vaporizada y espuma de leche.",
-      price: "$2.75",
-      image: "https://avatars.mds.yandex.net/get-altay/13451497/2a0000018ed9af680cbea3c965bebbc1a280/XXXL"
-    },
-    {
-      id: 3,
-      name: "Chocolate Caliente",
-      description: "Elaborado con chocolate negro 70% y leche fresca.",
-      price: "$3.25",
-      image: "https://avatars.mds.yandex.net/get-altay/13451497/2a0000018ed9af680cbea3c965bebbc1a280/XXXL"
-    },
-    {
-      id: 4,
-      name: "Té Orgánico",
-      description: "Selección de tés orgánicos de diferentes variedades.",
-      price: "$2.25",
-      image: "https://avatars.mds.yandex.net/get-altay/13451497/2a0000018ed9af680cbea3c965bebbc1a280/XXXL"
-    }
-  ]
+    
+    const response = await api.get(endpoint)
+    products.value = response.data
+    extractCategories()
+    filterProducts()
+    
+  } catch (err) {
+    error.value = err.response?.data?.message || 'Error al cargar los productos'
+    console.error('Error fetching products:', err)
+  } finally {
+    loading.value = false
+  }
 }
+
+const fetchProductsByCategory = async (categoryId) => {
+  if (!categoryId) {
+    fetchProducts()
+    return
+  }
+
+  try {
+    loading.value = true
+    error.value = null
+    
+    
+    const response = await api.get(`/products/category/${categoryId}`)
+    let data = response.data
+    
+    
+    if (selectedFilter.value === 'available') {
+      data = data.filter(product => product.isAvailable)
+    } else if (selectedFilter.value === 'highlighted') {
+      data = data.filter(product => product.isHighlighted)
+    }
+    
+    products.value = data
+    filterProducts()
+    
+  } catch (err) {
+    error.value = err.response?.data?.message || 'Error al cargar los productos de la categoría'
+    console.error('Error fetching products by category:', err)
+  } finally {
+    loading.value = false
+  }
+}
+
+// Extraer categorías de los productos
+const extractCategories = () => {
+  const categoryMap = new Map()
+  
+  products.value.forEach(product => {
+    if (product.category) {
+      if (typeof product.category === 'object') {
+        categoryMap.set(product.category._id, product.category)
+      } else {
+        categoryMap.set(product.category, { _id: product.category, name: product.category })
+      }
+    }
+  })
+  
+  categories.value = Array.from(categoryMap.values())
+}
+
+// Filtrar productos
+const filterProducts = () => {
+  let filtered = [...products.value]
+  
+  
+  if (selectedCategory.value) {
+    filtered = filtered.filter(product => {
+      if (!product.category) return false
+      const categoryId = typeof product.category === 'object' 
+        ? product.category._id 
+        : product.category
+      return categoryId === selectedCategory.value
+    })
+  }
+  
+  
+  if (searchTerm.value) {
+    const search = searchTerm.value.toLowerCase()
+    filtered = filtered.filter(product =>
+      product.name.toLowerCase().includes(search) ||
+      (product.description && product.description.toLowerCase().includes(search))
+    )
+  }
+  
+  filteredProducts.value = filtered
+}
+
+
+const handleFilterChange = (value) => {
+  selectedFilter.value = value
+  fetchProducts()
+}
+
+const handleSearchChange = (value) => {
+  searchTerm.value = value
+  filterProducts()
+}
+
+const handleCategoryChange = (value) => {
+  selectedCategory.value = value
+  filterProducts()
+}
+
+
+const quickFilter = (categoryId) => {
+  selectedCategory.value = categoryId
+  
+  if (categoryId) {
+    fetchProductsByCategory(categoryId)
+  } else {
+    fetchProducts()
+  }
+}
+
+// Limpiar filtros
+const clearFilters = () => {
+  selectedFilter.value = 'available' 
+  selectedCategory.value = ''
+  searchTerm.value = ''
+  fetchProducts()
+}
+
+
+const addToCart = async (product) => {
+  if (!product.isAvailable) {
+    showNotification('Este producto no está disponible')
+    return
+  }
+  
+  try {
+    
+    await api.post('/shoppingcart/add', {
+      productId: product._id,
+      quantity: 1
+    })
+    
+    showNotification(`${product.name} agregado al carrito`)
+    
+  } catch (error) {
+    
+    if (error.response?.status === 401) {
+      showNotification('Debes iniciar sesión para agregar productos al carrito')
+    } else if (error.response?.status === 400) {
+      showNotification('Producto no disponible')
+    } else {
+      showNotification('Error al agregar al carrito')
+    }
+    console.error('Error adding to cart:', error)
+  }
+}
+
+// Mostrar notificación
+const showNotification = (message) => {
+  cartNotificationMessage.value = message
+  showCartNotification.value = true
+  
+  setTimeout(() => {
+    showCartNotification.value = false
+  }, 3000)
+}
+
+// Cargar carrito desde la API
+const loadCart = async () => {
+  try {
+    const cartData = await cartService.getCart()
+    cart.value = cartData
+  } catch (error) {
+   
+    if (error.response?.status === 401) {
+      cart.value = null
+    } else {
+      console.error('Error loading cart:', error)
+      cart.value = null
+    }
+  }
+}
+
+
+const updateCartItemQuantity = async (productId, quantity) => {
+  try {
+    await cartService.updateCartItem(productId, quantity)
+    await loadCart()
+    showNotification('Cantidad actualizada')
+  } catch (error) {
+    showNotification('Error al actualizar cantidad')
+    console.error('Error updating cart item:', error)
+  }
+}
+
+const removeCartItem = async (productId) => {
+  try {
+    await cartService.removeFromCart(productId)
+    await loadCart()
+    showNotification('Producto eliminado del carrito')
+  } catch (error) {
+    showNotification('Error al eliminar producto')
+    console.error('Error removing cart item:', error)
+  }
+}
+
+// Lifecycle
+onMounted(async () => {
+  await loadCart()
+  await fetchProducts()
+})
 </script>
