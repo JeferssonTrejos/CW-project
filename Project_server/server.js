@@ -13,6 +13,7 @@ import categoryRoutes from "./routes/category.routes.js";
 import shoppingCartRoutes from "./routes/shoppingCart.routes.js";
 import orderRoutes from "./routes/order.routes.js";
 
+
 dotenv.config();
 
 const app = express();
@@ -23,12 +24,8 @@ connectDB();
 // Middlewares globales
 app.use(express.json());
 app.use(cookieParser());
-app.use(
-  cors({
-    origin: "https://panaderiaelrosariov2.netlify.app",
-    credentials: true,
-  })
-);
+app.use(cors(corsOptions));
+
 // Rutas
 app.use("/admins", adminRoutes);
 app.use("/auth", authRoutes);

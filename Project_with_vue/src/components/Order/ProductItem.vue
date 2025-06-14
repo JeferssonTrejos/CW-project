@@ -143,15 +143,6 @@ const handleSelectionChange = (product, isSelected) => {
         </div>
       </div>
     </div>
-<<<<<<< HEAD
-    <!-- Botón Agregar al carrito -->
-    <!-- <div class="mt-2 ml-8">
-      <AddToCartButton
-        :productId="product.id.toString()"
-        :quantity="product.quantity"
-      />
-    </div> -->
-=======
     
     <!-- Botón Agregar al carrito -->
     <div class="mt-2 ml-8">
@@ -171,6 +162,5 @@ const handleSelectionChange = (product, isSelected) => {
         ✓ Ya está en tu carrito
       </div>
     </div>
->>>>>>> refs/remotes/origin/main
   </div>
 </template>
