@@ -9,6 +9,7 @@ import Order from "../views/Order.vue";
 import Contact from "../views/Contact.vue";
 import NotFound from "../views/NotFound.vue";
 import Profile from "@/views/Profile.vue";
+import Cart from "@/views/Cart.vue";
 
 const routes = [
   {
@@ -42,12 +43,16 @@ const routes = [
     path: "/order",
     name: "Order",
     component: Order,
-  },
-  {
+  },  {
     path: "/profile",
     name: "profile",
     component: Profile,
     meta: { requiresAuth: true },
+  },
+  {
+    path: "/cart",
+    name: "Cart",
+    component: Cart,
   },
   {
     path: "/:pathMatch(.*)*",

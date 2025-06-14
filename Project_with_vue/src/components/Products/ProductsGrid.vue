@@ -6,7 +6,7 @@
         <div
           v-for="product in products"
           :key="product._id"
-          class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300"
+          class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300 flex flex-col"
         >
           
           <div class="relative h-48 bg-gray-200">
@@ -35,7 +35,7 @@
           </div>
 
           
-          <div class="p-4">
+          <div class="p-4 flex-grow flex flex-col">
         
             <div v-if="product.category" class="mb-2">
               <span class="inline-block bg-amber-100 text-amber-800 text-xs px-2 py-1 rounded-full">
@@ -49,30 +49,27 @@
             </h3>
 
             
-            <p class="text-gray-600 text-sm mb-3 h-12 overflow-hidden">
+            <p class="text-gray-600 text-sm mb-3 overflow-hidden flex-grow">
               {{ product.description }}
             </p>
 
             
-            <div class="flex items-center justify-between">
-              <span class="text-xl font-bold text-amber-600">
+            <div class="mt-auto">
+              <span class="block text-xl font-bold text-amber-600 mb-2">
                 {{ formatPrice(product.price) }}
               </span>
 
-              <button
-                v-if="product.isAvailable"
-                @click="$emit('add-to-cart', product)"
-                class="bg-amber-600 text-white px-4 py-2 rounded-md hover:bg-amber-700 transition-colors flex items-center space-x-2"
-              >
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-2.5-2.5M7 13l2.5 2.5"></path>
-                </svg>
-                <span>Agregar</span>
-              </button>
+              <div v-if="product.isAvailable" class="w-full">
+                <AddToCartButton 
+                  :product-id="product._id" 
+                  button-text="Agregar al carrito" 
+                  @product-added="onProductAdded"
+                />
+              </div>
 
               <span
                 v-else
-                class="text-gray-500 text-sm"
+                class="block text-center text-gray-500 text-sm py-2"
               >
                 No disponible
               </span>
@@ -101,6 +98,8 @@
 </template>
 
 <script setup>
+import AddToCartButton from '@/components/Cart/AddToCartButton.vue';
+
 defineProps({
   products: {
     type: Array,
@@ -138,5 +137,10 @@ const getCategoryName = (category) => {
 
 const handleImageError = (event) => {
   event.target.src = 'https://avatars.mds.yandex.net/get-altay/13451497/2a0000018ed9af680cbea3c965bebbc1a280/XXXL'
+}
+
+const onProductAdded = () => {
+  // Disparar evento personalizado para actualizar el contador del carrito
+  window.dispatchEvent(new CustomEvent('cart-updated'));
 }
 </script>

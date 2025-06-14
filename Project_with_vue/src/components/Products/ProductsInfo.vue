@@ -11,12 +11,17 @@
     </section>
 
     <section class="text-center">
-      <p class="text-amber-700 mb-4">¿Listo para probar nuestros deliciosos productos?</p>
-      <router-link 
-        to="/order" 
-        class="inline-block bg-amber-600 text-white px-6 py-3 rounded-lg hover:bg-amber-700 transition-colors"
+      <p class="text-amber-700 mb-4">¿Listo para probar nuestros deliciosos productos?</p>      <router-link 
+        to="/cart" 
+        class="inline-block bg-amber-600 text-white px-6 py-3 rounded-lg hover:bg-amber-700 transition-colors mr-2"
       >
         Ver Carrito ({{ cartCount }})
+      </router-link>
+      <router-link 
+        to="/order" 
+        class="inline-block bg-amber-700 text-white px-6 py-3 rounded-lg hover:bg-amber-800 transition-colors"
+      >
+        Hacer Pedido
       </router-link>
     </section>
   </div>
