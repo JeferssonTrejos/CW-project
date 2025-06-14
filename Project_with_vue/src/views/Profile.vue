@@ -31,7 +31,7 @@ const paymentMethodMap = {
 const getMyOrders = async () => {
   try {
     const response = await api.get("/orders");
-    orders.value = response.data.orders;
+    orders.value = response.data.orders.reverse();
   } catch (error) {
     console.error("Error al obtener los pedidos:", error);
   } finally {
