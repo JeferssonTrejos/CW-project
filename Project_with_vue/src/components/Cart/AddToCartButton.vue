@@ -55,41 +55,30 @@ export default {
       this.loading = true;
       this.message = '';
       
-      // Verificar si hay token (usuario logueado)
-      const token = localStorage.getItem('token');
-      if (!token) {
-        this.message = 'Debes iniciar sesión para añadir al carrito';
-        this.messageType = 'error';
-        this.loading = false;
-        
-        // Guardar la URL actual para redirigir después del login
-        localStorage.setItem('redirectAfterLogin', window.location.pathname);
-        
-        // Redirigir a login después de 2 segundos
-        setTimeout(() => {
-          this.$router.push('/login');
-        }, 2000);
-        return;
-      }
-      
       try {
+        console.log('Enviando producto al carrito:', {
+          productId: this.productId,
+          quantity: this.quantity
+        });
+        
         await api.post('/shoppingcart/add', 
           { 
             productId: this.productId, 
             quantity: this.quantity 
-          },
-          {
-            headers: {
-              'Authorization': `Bearer ${token}`
-            }
           }
         );
         
         this.message = 'Producto añadido al carrito';
         this.messageType = 'success';
         
-        // Emitir evento para actualizar contadores del carrito
-        this.$emit('product-added');
+        // Emitir evento con el ID del producto y la cantidad añadida
+        this.$emit('product-added', {
+          productId: this.productId,
+          quantity: this.quantity
+        });
+        
+        // Disparar un evento para actualizar el contador del carrito en la barra de navegación
+        window.dispatchEvent(new CustomEvent('cart-updated'));
         
         // Limpiar mensaje después de 3 segundos
         setTimeout(() => {
@@ -98,10 +87,19 @@ export default {
         
       } catch (error) {
         console.error('Error al añadir al carrito:', error);
+        console.error('Detalles del error:', {
+          status: error.response?.status,
+          data: error.response?.data,
+          productId: this.productId
+        });
         
         if (error.response?.status === 401) {
-          this.message = 'Sesión expirada. Por favor, inicia sesión de nuevo.';
-          localStorage.removeItem('token');
+          this.message = 'Necesitas iniciar sesión para añadir productos al carrito';
+          
+          // Guardar la URL actual para redirigir después del login
+          localStorage.setItem('redirectAfterLogin', window.location.pathname);
+          
+          // Redirigir a login después de 2 segundos
           setTimeout(() => {
             this.$router.push('/login');
           }, 2000);

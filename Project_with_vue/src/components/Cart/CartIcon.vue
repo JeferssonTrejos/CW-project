@@ -34,18 +34,7 @@ export default {
   methods: {
     async fetchCartCount() {
       try {
-        const token = localStorage.getItem('token');
-        if (!token) {
-          this.itemCount = 0;
-          return;
-        }
-        
-        const response = await api.get('/shoppingcart', {
-          headers: {
-            'Authorization': `Bearer ${token}`
-          }
-        });
-        
+        const response = await api.get('/shoppingcart');
         const cart = response.data;
         this.itemCount = cart && cart.items ? cart.items.length : 0;
       } catch (error) {

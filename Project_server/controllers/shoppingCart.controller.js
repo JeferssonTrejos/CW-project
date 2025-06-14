@@ -122,10 +122,31 @@ const removeFromCart = async (req, res) => {
   }
 };
 
+// Eliminar todos los productos del carrito
+const clearCart = async (req, res) => {
+  try {
+    const shoppingCart = await ShoppingCart.findOne({ user: req.user.id });
+    if (!shoppingCart) {
+      return res.status(404).json({ error: "Carrito no encontrado" });
+    }
+
+    // Vaciar el carrito
+    shoppingCart.items = [];
+    await shoppingCart.save();
+
+    res
+      .status(200)
+      .json({ message: "Carrito vaciado correctamente", cart: shoppingCart });
+  } catch (error) {
+    console.error("Error al vaciar el carrito:", error);
+    res.status(500).json({ error: "Error al vaciar el carrito" });
+  }
+};
+
 export default {
   getShoppingcart,
   addToShoppingCart,
   updateCartItem,
   removeFromCart,
+  clearCart,
 };
-//

@@ -229,15 +229,14 @@ onMounted(() => {
               </router-link>
               <span class="text-red-500">*</span>
             </label>
-          </div>
-
-          <!-- Botón de Confirmar -->
+          </div>          <!-- Botón de Confirmar -->
           <button
             type="submit"
             :disabled="!isFormValid || isSubmitting"
             class="bg-amber-600 text-white w-full py-4 rounded-lg hover:bg-amber-700 transition-colors font-medium text-lg cursor-pointer flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            Confirmar Pedido
+            <span v-if="submitting" class="animate-spin h-5 w-5 border-2 border-white border-t-transparent rounded-full"></span>
+            <span>{{ submitting ? 'Procesando pedido...' : 'Confirmar Pedido' }}</span>
           </button>
         </form>
       </div>

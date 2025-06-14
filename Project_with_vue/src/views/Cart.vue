@@ -186,6 +186,9 @@ export default {
       try {
         await ShoppingCartService.updateCartItem(productId, quantity);
         await this.fetchCart();
+        
+        // Disparar evento para actualizar el contador del carrito
+        window.dispatchEvent(new CustomEvent('cart-updated'));
       } catch (error) {
         console.error("Error al actualizar cantidad:", error);
         this.error =
@@ -207,6 +210,9 @@ export default {
       try {
         await ShoppingCartService.removeFromCart(productId);
         await this.fetchCart();
+        
+        // Disparar evento para actualizar el contador del carrito
+        window.dispatchEvent(new CustomEvent('cart-updated'));
       } catch (error) {
         console.error("Error al eliminar producto:", error);
         this.error =
