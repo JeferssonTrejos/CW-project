@@ -23,8 +23,12 @@ connectDB();
 // Middlewares globales
 app.use(express.json());
 app.use(cookieParser());
-app.use(cors(corsOptions));
-
+app.use(
+  cors({
+    origin: "https://panaderiaelrosariov2.netlify.app",
+    credentials: true,
+  })
+);
 // Rutas
 app.use("/admins", adminRoutes);
 app.use("/auth", authRoutes);
