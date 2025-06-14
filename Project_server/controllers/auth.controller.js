@@ -3,7 +3,7 @@ import User from "../models/user.model.js";
 
 const cookieOptions = {
   httpOnly: true,
-  secure: process.env.NODE_ENV === "production",
+  secure: true,
   sameSite: "none",
   maxAge: 60 * 60 * 24000, // 1 hora en ms
 };
