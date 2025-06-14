@@ -1,6 +1,8 @@
 // Lista de orígenes permitidos
-const allowedOrigins = ["https://panaderiaelrosariov2.netlify.app/"];
-
+const allowedOrigins = [
+  "https://panaderiaelrosariov2.netlify.app/",
+  "http://localhost:3000",
+];
 export const corsOptions = {
   origin: (origin, callback) => {
     // Permitir peticiones sin origen (como Postman o curl)
