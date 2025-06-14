@@ -26,8 +26,14 @@ export const corsOptions = {
     "http://localhost:3000", // Para desarrollo local
     "http://localhost:5173", // Para Vite dev server
   ],
-  credentials: true, // MUY IMPORTANTE: permite cookies
-  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-  allowedHeaders: ["Content-Type", "Authorization"],
+  credentials: true, // MUY IMPORTANTE para cookies
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"],
+  allowedHeaders: [
+    "Content-Type",
+    "Authorization",
+    "X-Requested-With",
+    "Accept",
+    "Origin",
+  ],
   exposedHeaders: ["Set-Cookie"],
 };

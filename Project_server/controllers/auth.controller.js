@@ -1,13 +1,14 @@
 import jwt from "jsonwebtoken";
 import User from "../models/user.model.js";
 
+// Configuración de cookies
 const cookieOptions = {
   httpOnly: true,
-  secure: true,
-  sameSite: "none",
-  maxAge: 60 * 60 * 24000, // 1 hora en ms
+  secure: process.env.NODE_ENV === "production", // true en producción
+  sameSite: process.env.NODE_ENV === "production" ? "none" : "lax", // "none" para cross-origin
+  maxAge: 24 * 60 * 60 * 1000, // 24 horas
+  path: "/",
 };
-
 // Metodo para registrar usuario
 const register = async (req, res) => {
   try {
@@ -131,7 +132,10 @@ const getProfile = (req, res) => {
 };
 
 const logout = (req, res) => {
-  res.clearCookie("token", cookieOptions);
+  res.clearCookie("token", {
+    ...cookieOptions,
+    maxAge: 0, // Expirar inmediatamente
+  });
   res.json({ message: "Sesión cerrada" });
 };
 
