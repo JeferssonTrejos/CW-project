@@ -4,7 +4,7 @@ import User from "../models/user.model.js";
 const cookieOptions = {
   httpOnly: true,
   secure: process.env.NODE_ENV === "production",
-  sameSite: "lax",
+  sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax", // 'None' para producción, 'Lax' en local
   maxAge: 60 * 60 * 24000, // 1 hora en ms
 };
 
