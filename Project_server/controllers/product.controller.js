@@ -147,9 +147,9 @@ export const getProductById = async (req, res) => {
 
 export const getProductsByCategory = async (req, res) => {
   try {
-    const { categoryId } = req.params;
+    const { id } = req.params;
 
-    const products = await Product.find({ category: categoryId }).populate(
+    const products = await Product.find({ category: id }).populate(
       "category"
     );
     if (!products.length) {

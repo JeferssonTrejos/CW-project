@@ -1,13 +1,13 @@
 <template>
-  <nav class="container mx-auto px-4 pb-8">
+  <nav class="container mx-auto px-4 py-8">
     <div class="flex flex-wrap justify-center gap-4">
       <button
         @click="$emit('quick-filter', '')"
         :class="[
           'px-4 py-2 rounded-md transition-colors',
-          selectedCategory === '' 
-            ? 'bg-amber-600 text-white' 
-            : 'bg-amber-100 hover:bg-amber-200 text-amber-800'
+          selectedCategory === ''
+            ? 'bg-amber-600 text-white'
+            : 'bg-amber-100 hover:bg-amber-200 text-amber-800',
         ]"
       >
         Todos
@@ -18,9 +18,9 @@
         @click="$emit('quick-filter', category._id)"
         :class="[
           'px-4 py-2 rounded-md transition-colors',
-          selectedCategory === category._id 
-            ? 'bg-amber-600 text-white' 
-            : 'bg-amber-100 hover:bg-amber-200 text-amber-800'
+          selectedCategory === category._id
+            ? 'bg-amber-600 text-white'
+            : 'bg-amber-100 hover:bg-amber-200 text-amber-800',
         ]"
       >
         {{ category.name }}
@@ -33,13 +33,13 @@
 defineProps({
   categories: {
     type: Array,
-    default: () => []
+    default: () => [],
   },
   selectedCategory: {
     type: String,
-    default: ''
-  }
-})
+    default: "",
+  },
+});
 
-defineEmits(['quick-filter'])
+defineEmits(["quick-filter"]);
 </script>
