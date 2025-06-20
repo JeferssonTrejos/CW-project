@@ -142,7 +142,7 @@ const login = async (req, res) => {
     const { accessToken } = generateTokens(user);
 
     // Configurar cookies
-    setTokenCookies(res, accessToken);// Enviar cookie
+    setTokenCookies(res, accessToken); // Enviar cookie
     // res.cookie("token", token, cookieOptions);
 
     res.status(200).json({
@@ -197,10 +197,7 @@ const getProfile = (req, res) => {
 };
 
 const logout = (req, res) => {
-  res.clearCookie("token", {
-    ...cookieOptions,
-    maxAge: 0, // Expirar inmediatamente
-  });
+  res.clearCookie("token");
   res.json({ message: "Sesión cerrada" });
 };
 
