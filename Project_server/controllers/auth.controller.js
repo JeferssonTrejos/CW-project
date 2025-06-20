@@ -50,7 +50,7 @@ const setTokenCookies = (res, accessToken, refreshToken) => {
 
   res.cookie("token", accessToken, {
     ...cookieOptions,
-    maxAge: 15 * 60 * 1000, // 15 minutos
+    maxAge: 24 * 60 * 60 * 1000, // 24 horas
   });
 
   // res.cookie("refreshToken", refreshToken, {
